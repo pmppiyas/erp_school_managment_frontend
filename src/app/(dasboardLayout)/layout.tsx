@@ -22,7 +22,7 @@ export default async function DashboardLayout({
       <AppSidebar />
       <SidebarInset>
         <SiteHeader />
-        <main className="p-6 ">{children}</main>
+        <main className="p-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
