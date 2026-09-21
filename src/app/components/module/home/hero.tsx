@@ -54,7 +54,10 @@ export default function HeroSection() {
   );
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-blue-950 via-indigo-950 to-slate-900">
+    <section
+      id="hero-section"
+      className="relative w-full overflow-hidden bg-linear-to-b from-blue-950 via-indigo-950 to-slate-900"
+    >
       <div className="embla w-full" ref={emblaRef}>
         <div className="embla__container flex w-full h-screen min-h-[640px] max-h-[960px]">
           {HERO_SLIDES.map((slide, index) => {
@@ -73,23 +76,22 @@ export default function HeroSection() {
                     className="object-cover object-center scale-105 transition-transform duration-1000 ease-out"
                     priority={index === 0}
                   />
-                  {/* Full-width multi-layer uniform dark & vibrant gradient masks */}
-                  <div className="absolute inset-0 w-full h-full bg-slate-950/70" />
-                  <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-950/95 via-blue-950/85 to-indigo-950/80" />
-                  <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-slate-950/95 via-transparent to-black/50" />
-                  <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-amber-500/15 via-orange-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+                  {/* Soft directional gradient: dims left side for text readability while keeping right side bright and vibrant */}
+                  <div className="absolute inset-0 w-full h-full bg-linear-to-r from-slate-950/80 via-slate-900/45 to-transparent" />
+                  <div className="absolute inset-0 w-full h-full bg-linear-to-t from-slate-950/60 via-transparent to-black/25" />
+                  <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
                 </div>
 
                 {/* Content Container */}
-                <div className="relative z-10 h-full flex items-center pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-14">
-                  <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+                <div className="relative z-10 h-full flex items-center pt-32 sm:pt-36 md:pt-40 pb-12 sm:pb-14 w-full">
+                  <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
                     <div className="max-w-3xl space-y-6">
                       {/* Top Badge - Soothing & Elegant */}
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={isCurrent ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-600/30 via-indigo-600/30 to-sky-600/30 backdrop-blur-md border border-sky-400/40 text-sky-200 text-xs sm:text-sm font-bold shadow-lg shadow-blue-500/10"
+                        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-linear-to-r from-blue-600/30 via-indigo-600/30 to-sky-600/30 backdrop-blur-md border border-sky-400/40 text-sky-200 text-xs sm:text-sm font-bold shadow-lg shadow-blue-500/10"
                       >
                         <Trophy className="w-4 h-4 text-sky-400 animate-bounce" />
                         <span>গৌরবময় ঐতিহ্য ও আধুনিক শিক্ষা ব্যবস্থা</span>
@@ -139,7 +141,7 @@ export default function HeroSection() {
                         <Button
                           size="lg"
                           asChild
-                          className="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:via-indigo-700 hover:to-sky-700 text-white font-extrabold text-sm sm:text-base px-8 h-12.5 rounded-2xl shadow-xl shadow-blue-500/30 hover:scale-105 transition-all"
+                          className="bg-linear-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:via-indigo-700 hover:to-sky-700 text-white font-extrabold text-sm sm:text-base px-8 h-12.5 rounded-2xl shadow-xl shadow-blue-500/30 hover:scale-105 transition-all"
                         >
                           <Link href="/contact" className="flex items-center gap-2.5">
                             <span>ভর্তি ও যোগাযোগ</span>
@@ -169,9 +171,9 @@ export default function HeroSection() {
                       >
                         {slide.stats.map((stat, i) => {
                           const cardStyles = [
-                            'bg-gradient-to-br from-blue-600/30 to-indigo-600/30 border-blue-400/40 text-blue-200',
-                            'bg-gradient-to-br from-sky-600/30 to-blue-600/30 border-sky-400/40 text-sky-200',
-                            'bg-gradient-to-br from-emerald-600/30 to-teal-600/30 border-emerald-400/40 text-emerald-200',
+                            'bg-linear-to-br from-blue-600/30 to-indigo-600/30 border-blue-400/40 text-blue-200',
+                            'bg-linear-to-br from-sky-600/30 to-blue-600/30 border-sky-400/40 text-sky-200',
+                            'bg-linear-to-br from-emerald-600/30 to-teal-600/30 border-emerald-400/40 text-emerald-200',
                           ];
                           return (
                             <div
@@ -198,39 +200,43 @@ export default function HeroSection() {
       </div>
 
       {/* Modern Floating Navigation Controls */}
-      <div className="absolute bottom-6 sm:bottom-8 right-4 sm:right-12 z-20 flex items-center gap-4">
-        {/* Dot Indicators */}
-        <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/90 backdrop-blur-xl border border-white/40 shadow-lg">
-          {HERO_SLIDES.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => scrollTo(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                selectedIndex === idx
-                  ? 'w-7 bg-gradient-to-r from-blue-600 to-indigo-600 shadow-sm'
-                  : 'w-2.5 bg-slate-300 hover:bg-slate-400'
-              }`}
-            />
-          ))}
-        </div>
+      <div className="absolute bottom-6 sm:bottom-8 inset-x-0 z-20 pointer-events-none">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex justify-end">
+          <div className="flex items-center gap-4 pointer-events-auto">
+            {/* Dot Indicators */}
+            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/90 backdrop-blur-xl border border-white/40 shadow-lg">
+              {HERO_SLIDES.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => scrollTo(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    selectedIndex === idx
+                      ? 'w-7 bg-linear-to-r from-blue-600 to-indigo-600 shadow-sm'
+                      : 'w-2.5 bg-slate-300 hover:bg-slate-400'
+                  }`}
+                />
+              ))}
+            </div>
 
-        {/* Arrow Navigation Pills */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={scrollPrev}
-            aria-label="Previous Slide"
-            className="p-3 rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-xl hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:border-transparent transition-all shadow-xl active:scale-95"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={scrollNext}
-            aria-label="Next Slide"
-            className="p-3 rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-xl hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:border-transparent transition-all shadow-xl active:scale-95"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+            {/* Arrow Navigation Pills */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={scrollPrev}
+                aria-label="Previous Slide"
+                className="p-3 rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-xl hover:bg-linear-to-r hover:from-blue-600 hover:to-indigo-600 hover:border-transparent transition-all shadow-xl active:scale-95 cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={scrollNext}
+                aria-label="Next Slide"
+                className="p-3 rounded-full border border-white/30 bg-white/20 text-white backdrop-blur-xl hover:bg-linear-to-r hover:from-blue-600 hover:to-indigo-600 hover:border-transparent transition-all shadow-xl active:scale-95 cursor-pointer"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

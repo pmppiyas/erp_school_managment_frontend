@@ -108,12 +108,12 @@ const NoticeBoard = () => {
   };
 
   return (
-    <section className="w-full pt-8 sm:pt-12 pb-14 sm:pb-16 bg-white dark:bg-[#060D1A] text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
+    <section className="w-full pt-8 sm:pt-12 pb-14 sm:pb-16 bg-slate-50/70 dark:bg-[#070D18] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
       {/* Decorative Ambient Mesh Glows */}
       <div className="absolute top-10 left-10 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-7xl relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -135,7 +135,7 @@ const NoticeBoard = () => {
 
         {/* Live News Flash Ticker Bar */}
         <div className="mb-6 sm:mb-8 rounded-2xl bg-white dark:bg-slate-900/90 border border-blue-100 dark:border-slate-800 shadow-md p-2 sm:p-2.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 overflow-hidden">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 text-white font-bold text-xs sm:text-sm shrink-0 shadow-sm">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-linear-to-r from-blue-600 via-indigo-600 to-sky-600 text-white font-bold text-xs sm:text-sm shrink-0 shadow-sm">
             <span className="flex h-2 w-2 rounded-full bg-sky-200 animate-ping" />
             <Sparkles className="w-4 h-4 text-sky-200" />
             <span>জরুরি আপডেট:</span>
@@ -165,7 +165,7 @@ const NoticeBoard = () => {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shrink-0 ${
                 activeCategory === cat
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 scale-105'
+                  ? 'bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 scale-105'
                   : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-300 hover:bg-blue-50/50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 shadow-xs'
               }`}
             >
@@ -205,7 +205,7 @@ const NoticeBoard = () => {
                         <div className="space-y-1.5 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
                             {item.isPinned && (
-                              <span className="inline-flex items-center gap-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs">
+                              <span className="inline-flex items-center gap-1 bg-linear-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs">
                                 <Pin className="w-3 h-3 rotate-45 text-sky-200" /> পিন করা
                               </span>
                             )}
@@ -266,7 +266,7 @@ const NoticeBoard = () => {
           {/* Right Column: Quick Sidebar (4 Cols) */}
           <aside className="lg:col-span-4 space-y-6">
             {/* Urgent Bulletin Box */}
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white p-6 sm:p-7 shadow-xl border border-blue-800/60">
+            <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-900 via-blue-950 to-indigo-950 text-white p-6 sm:p-7 shadow-xl border border-blue-800/60">
               <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl pointer-events-none" />
               <div className="relative z-10 space-y-4">
                 <div className="flex items-center gap-2.5">
@@ -286,7 +286,7 @@ const NoticeBoard = () => {
                 <div className="pt-2">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm shadow-md shadow-blue-500/30 hover:scale-[1.02] transition-all"
+                    className="inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-2xl bg-linear-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm shadow-md shadow-blue-500/30 hover:scale-[1.02] transition-all"
                   >
                     <span>যোগাযোগ হেল্পডেস্ক</span>
                     <ArrowRight className="w-4 h-4" />

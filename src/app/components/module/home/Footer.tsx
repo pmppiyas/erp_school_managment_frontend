@@ -31,14 +31,14 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-400 border-t border-slate-800/80">
+    <footer className="w-full bg-linear-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-400 border-t border-slate-800/80">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-16 max-w-7xl">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* School Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-500 text-white shadow-md">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-tr from-blue-600 via-indigo-600 to-sky-500 text-white shadow-md">
                 <GraduationCap className="h-5 w-5" />
               </div>
               <span className="text-xl font-bold text-white tracking-tight">
@@ -158,7 +158,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-slate-800/80">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-5 max-w-7xl">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-5">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
             <p>
               © {new Date().getFullYear()} ধরমপুর মডেল একাডেমি। সর্বস্বত্ব

@@ -48,12 +48,12 @@ const Information = () => {
   ];
 
   return (
-    <section className="w-full py-16 sm:py-20 bg-gradient-to-b from-blue-50/70 via-slate-50 to-slate-100/80 dark:from-slate-900 dark:via-[#0B132B] dark:to-slate-950 border-y border-slate-200/80 dark:border-slate-800 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
+    <section className="w-full py-16 sm:py-20 bg-linear-to-b from-blue-50/60 via-sky-50/30 to-white dark:from-[#091122] dark:via-[#080E1C] dark:to-[#070D18] border-b border-blue-100/60 dark:border-slate-800/80 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
       {/* Decorative Ambient Mesh Glows */}
       <div className="absolute top-1/2 -left-20 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/4 -right-20 w-80 h-80 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-7xl relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Chairman / Principal's Message Showcase Card */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -63,14 +63,14 @@ const Information = () => {
           className="mb-14 rounded-3xl bg-white dark:bg-slate-900/90 border border-slate-200/90 dark:border-slate-800 p-6 sm:p-10 shadow-sm dark:shadow-2xl relative overflow-hidden backdrop-blur-md"
         >
           {/* Subtle Ambient Background Gradient */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-blue-500/10 via-sky-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-linear-to-bl from-blue-500/10 via-sky-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Image Column (5 Cols) */}
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative group max-w-[340px] w-full">
                 {/* Glowing Outer Ring */}
-                <div className="absolute -inset-2 bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-500 rounded-3xl blur-md opacity-25 group-hover:opacity-45 transition-opacity duration-500" />
+                <div className="absolute -inset-2 bg-linear-to-tr from-blue-600 via-indigo-600 to-sky-500 rounded-3xl blur-md opacity-25 group-hover:opacity-45 transition-opacity duration-500" />
 
                 <div className="relative rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-950 border-2 border-white dark:border-white/15 shadow-2xl">
                   <Image
@@ -80,7 +80,7 @@ const Information = () => {
                     height={460}
                     className="w-full h-[360px] sm:h-[400px] object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent" />
 
                   {/* Badge on Photo */}
                   <div className="absolute bottom-4 inset-x-4 p-3 rounded-2xl bg-white/95 dark:bg-slate-950/90 backdrop-blur-md border border-white/80 dark:border-white/10 shadow-md text-center">

@@ -6,7 +6,8 @@ import { Users, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function OurTeacher() {
-  let { teachers = [] }: { teachers: ITeacher[] } = await getTeachers();
+  const data = await getTeachers();
+  let teachers: ITeacher[] = data?.teachers || [];
 
   // Fallback demo faculty data if server returns empty list
   if (!teachers || teachers.length === 0) {
@@ -49,12 +50,12 @@ export default async function OurTeacher() {
   const teacherCount = teachers.length > 4 ? teachers.length : 25;
 
   return (
-    <section className="w-full py-16 sm:py-20 bg-gradient-to-b from-blue-50/80 via-indigo-50/30 to-slate-100/80 dark:from-slate-900 dark:via-[#0B132B] dark:to-slate-950 border-y border-blue-100/80 dark:border-slate-800 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
+    <section className="w-full py-16 sm:py-20 bg-linear-to-b from-slate-50/90 via-blue-50/30 to-slate-100/80 dark:from-[#070D18] dark:via-[#091326] dark:to-[#070D18] border-y border-slate-200/80 dark:border-slate-800 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
       {/* Decorative Ambient Mesh Glows */}
       <div className="absolute top-10 -right-20 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 -left-20 w-80 h-80 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-7xl relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Header Animation - Minimal, Clean & Focused */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -70,7 +71,7 @@ export default async function OurTeacher() {
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-3">
             আমাদের{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 dark:from-sky-400 dark:via-blue-300 dark:to-indigo-300">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-indigo-600 to-sky-600 dark:from-sky-400 dark:via-blue-300 dark:to-indigo-300">
               শিক্ষকবৃন্দ
             </span>
           </h2>

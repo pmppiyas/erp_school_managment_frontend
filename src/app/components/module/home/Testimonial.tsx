@@ -41,12 +41,12 @@ const Testimonial = () => {
   ];
 
   return (
-    <section className="w-full py-16 sm:py-20 bg-white dark:bg-[#060D1A] text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
+    <section className="w-full py-16 sm:py-20 bg-white dark:bg-[#070D18] border-b border-slate-100 dark:border-slate-800/80 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
       {/* Decorative Ambient Mesh Glows */}
       <div className="absolute top-10 right-10 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 max-w-7xl relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Section Header - Clean & Trust-focused */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
