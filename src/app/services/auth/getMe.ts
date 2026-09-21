@@ -1,15 +1,21 @@
 import { serverFetch } from '@/lib/serverFetch';
 
 export const getMe = async () => {
-  const res = serverFetch.get('user/me', {
-    next: {
-      revalidate: 0,
-    },
-  });
+  try {
+    const res = await serverFetch.get('user/me', {
+      next: {
+        revalidate: 0,
+      },
+    });
 
-  const result = (await res).json();
+    if (!res.ok) {
+      return null;
+    }
 
-
-
-  return result;
+    const result = await res.json();
+    return result?.data || result;
+  } catch (err) {
+    console.error('Error fetching user in getMe:', err);
+    return null;
+  }
 };

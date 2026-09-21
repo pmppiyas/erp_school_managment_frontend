@@ -42,14 +42,18 @@ export function NavUser({
   const { refreshUser } = useUser();
 
   const handleLogout = async () => {
-    const res = await logout();
-    if (res.success) {
-      await refreshUser();
-      router.refresh();
-      router.push('/login');
-      toast.success((res.message as string) || 'Logged out successfully');
-    } else {
-      toast.error((res.message as string) || 'Logout failed');
+    try {
+      const res = await logout();
+      if (res?.success) {
+        toast.success((res.message as string) || 'Logged out successfully');
+        // Redirect directly to home ('/')
+        window.location.href = '/';
+      } else {
+        toast.error((res?.message as string) || 'Logout failed');
+      }
+    } catch (err) {
+      console.error('Logout error:', err);
+      window.location.href = '/';
     }
   };
 

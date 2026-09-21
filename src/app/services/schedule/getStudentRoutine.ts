@@ -1,23 +1,22 @@
 import { serverFetch } from '@/lib/serverFetch';
 
 export const getStudentRoutine = async (day: string) => {
-  const res = await serverFetch.get(`schedule/student/${day.toUpperCase()}`, {
-    next: {
-      revalidate: 60,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch student routine: ${res.statusText}`);
-  }
-
-  let result;
   try {
-    result = await res.json();
+    const res = await serverFetch.get(`schedule/student/${day.toUpperCase()}`, {
+      next: {
+        revalidate: 60,
+      },
+    });
+
+    if (!res.ok) {
+      console.warn(`getStudentRoutine returned status: ${res.status}`);
+      return null;
+    }
+
+    const result = await res.json();
+    return result.data;
   } catch (err) {
-    console.error('JSON parse error in getStudentRoutine:', err);
+    console.error('Error fetching student routine:', err);
     return null;
   }
-
-  return result.data;
 };

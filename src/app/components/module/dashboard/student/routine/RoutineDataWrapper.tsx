@@ -4,7 +4,7 @@ import { getStudentRoutine } from '@/app/services/schedule/getStudentRoutine';
 const RoutineDataWrapper = async ({ day }: { day: string }) => {
   const data = await getStudentRoutine(day);
 
-  return <RoutineTable slots={data.slots} />;
+  return <RoutineTable slots={data?.slots || []} />;
 };
 
 export default RoutineDataWrapper;

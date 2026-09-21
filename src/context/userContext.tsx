@@ -5,15 +5,19 @@ import { getMe } from '@/app/services/auth/getMe';
 import React, { createContext, useEffect, useState } from 'react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
-interface UserContextType {
+export interface UserContextType {
   user: any;
   isLoading: boolean;
   refreshUser: () => Promise<void>;
 }
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined
-);
+export const defaultUserContext: UserContextType = {
+  user: null,
+  isLoading: false,
+  refreshUser: async () => {},
+};
+
+export const UserContext = createContext<UserContextType>(defaultUserContext);
 
 export const UserProvider = ({
   children,
