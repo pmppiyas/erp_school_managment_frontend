@@ -27,23 +27,32 @@ const NavLinkClient = ({ href, title, iconName }: NavLinkProps) => {
   return (
     <Link
       href={href}
-      className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 group ${
+      className={`group relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
         isActive
-          ? 'bg-primary text-primary-foreground shadow-sm'
-          : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-sm shadow-blue-500/25'
+          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/90 dark:hover:bg-slate-800/60'
       }`}
     >
+      {/* Active left indicator pill */}
+      {isActive && (
+        <span className="absolute -left-1 top-1.5 bottom-1.5 w-1 rounded-r-full bg-white/90" />
+      )}
+
       <div
-        className={`${isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-primary'}`}
+        className={`shrink-0 transition-transform duration-200 group-hover:scale-110 ${
+          isActive
+            ? 'text-white'
+            : 'text-slate-500 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400'
+        }`}
       >
         {Icon ? (
           <Icon size={18} />
         ) : (
-          <Icons.Circle size={18} className="opacity-20" />
+          <Icons.Circle size={18} className="opacity-25" />
         )}
       </div>
 
-      <span className="text-sm font-medium tracking-wide">{title}</span>
+      <span className="truncate">{title}</span>
     </Link>
   );
 };

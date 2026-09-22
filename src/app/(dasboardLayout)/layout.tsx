@@ -14,15 +14,15 @@ export default async function DashboardLayout({
       style={
         {
           '--sidebar-width': 'calc(var(--spacing) * 60)',
-          '--header-height': 'calc(var(--spacing) * 12)',
+          '--header-height': 'calc(var(--spacing) * 14)',
         } as React.CSSProperties
       }
-      className="container max-w-7xl mx-auto"
+      className="min-h-screen w-full"
     >
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="flex flex-col min-h-screen !bg-slate-50/90 dark:!bg-slate-950/70">
         <SiteHeader />
-        <main className="p-6">{children}</main>
+        <main className="flex-1 p-4 md:p-6 w-full max-w-7xl mx-auto">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

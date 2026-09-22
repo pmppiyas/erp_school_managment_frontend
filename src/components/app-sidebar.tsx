@@ -25,25 +25,25 @@ export default async function AppSidebar() {
   const roleSections = getRoutesByRole(user.role);
 
   return (
-    <Sidebar collapsible="offcanvas" className="border-r border-border/40">
-      <SidebarHeader className="border-b border-border/40 py-4">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <Logo />
-          </SidebarMenuItem>
-        </SidebarMenu>
+    <Sidebar
+      collapsible="offcanvas"
+      className="border-r border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900"
+    >
+      {/* Header height matches top navbar (h-14) for unified grid line */}
+      <SidebarHeader className="flex h-14 items-center justify-between border-b border-slate-200/90 dark:border-slate-800 px-4">
+        <Logo />
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="px-2 py-3 space-y-3">
         {roleSections.map((section, idx) => (
-          <SidebarGroup key={idx} className="mb-4 last:mb-0">
+          <SidebarGroup key={idx} className="p-0">
             {section.title && (
-              <SidebarGroupLabel className="px-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mb-2">
+              <SidebarGroupLabel className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
                 {section.title}
               </SidebarGroupLabel>
             )}
             <SidebarGroupContent>
-              <SidebarMenu className="px-2 space-y-1">
+              <SidebarMenu className="space-y-0.5">
                 {section.nav.map((item) => (
                   <SidebarMenuItem key={item.href}>
                     <NavLinkClient
@@ -59,7 +59,7 @@ export default async function AppSidebar() {
         ))}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-border/40 p-4">
+      <SidebarFooter className="border-t border-slate-200/90 dark:border-slate-800 p-3 bg-slate-50/70 dark:bg-slate-900/70">
         <NavUser user={user ?? null} />
       </SidebarFooter>
     </Sidebar>

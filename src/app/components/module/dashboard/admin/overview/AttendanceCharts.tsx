@@ -81,17 +81,14 @@ const AttendanceCharts = ({ student }: Props) => {
       .sort((a, b) => parseInt(a.day) - parseInt(b.day));
 
     if (monthlyArray.length === 0) {
-      const daysInMonth = 30;
-      const sampleData = [];
-      for (let i = 1; i <= daysInMonth; i += 5) {
-        sampleData.push({
-          day: i.toString().padStart(2, '0'),
-
-          present: Math.floor(Math.random() * 5) + 18,
-          absent: Math.floor(Math.random() * 3) + 1,
-        });
-      }
-      return sampleData;
+      return [
+        { day: '01', present: 20, absent: 2 },
+        { day: '06', present: 22, absent: 1 },
+        { day: '11', present: 19, absent: 3 },
+        { day: '16', present: 21, absent: 2 },
+        { day: '21', present: 23, absent: 1 },
+        { day: '26', present: 20, absent: 2 },
+      ];
     }
 
     return monthlyArray;

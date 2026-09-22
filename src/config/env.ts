@@ -5,6 +5,14 @@ export const env = {
       ? 'https://ems-school-backend.vercel.app/api/v1'
       : 'http://localhost:5000/api/v1'),
 
+  NEXT_PUBLIC_FRONTEND_URL:
+    process.env.NEXT_PUBLIC_FRONTEND_URL || '/',
+
+  NEXT_PUBLIC_SUPPORT_URL:
+    process.env.NEXT_PUBLIC_SUPPORT_URL ||
+    process.env.NEXT_PUBLIC_Support_URL ||
+    '/contact',
+
   JWT_SECRET: process.env.JWT_SECRET || '23er34',
 
   admin: {
