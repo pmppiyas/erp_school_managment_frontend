@@ -13,7 +13,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import {  getRoutesByRole } from '@/routes/routes';
+import { getRoutesByRole } from '@/routes/routes';
 
 export default async function AppSidebar() {
   const user = await getUserInfo();
@@ -34,7 +34,7 @@ export default async function AppSidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent className="py-4">
+      <SidebarContent>
         {roleSections.map((section, idx) => (
           <SidebarGroup key={idx} className="mb-4 last:mb-0">
             {section.title && (
