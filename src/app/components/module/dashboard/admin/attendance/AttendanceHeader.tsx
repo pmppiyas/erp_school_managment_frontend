@@ -1,4 +1,5 @@
 import ManagementPageHeader from '@/app/components/module/dashboard/ManagementPageHeader';
+import { CalendarCheck } from 'lucide-react';
 
 const AttendanceHeader = ({
   selectDayClass,
@@ -10,6 +11,7 @@ const AttendanceHeader = ({
   return (
     <div>
       <ManagementPageHeader
+        icon={<CalendarCheck />}
         title="Attendance Management"
         description="Manage attendances information and details"
         actions={[selectMode, selectDayClass]}

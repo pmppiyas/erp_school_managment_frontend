@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, Clock } from 'lucide-react';
 import ManagementPageHeader from '../../ManagementPageHeader';
 import ClassTimeFormDialog from './ClassTimeFormDiolog';
 
@@ -11,6 +11,7 @@ const ClassTimeHeader = () => {
   return (
     <div>
       <ManagementPageHeader
+        icon={<Clock />}
         title="Class Time Management"
         description="Manage ClassTimes information and details"
         actions={[

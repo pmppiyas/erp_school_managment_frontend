@@ -26,10 +26,10 @@ const ManagementPageHeader = ({
       <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative space-y-4">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
           <div className="flex items-start gap-4">
             {!isLoading && icon && (
-              <div className="p-4 bg-primary text-primary-foreground rounded-2xl shadow-blue-500/20 shadow-xl">
+              <div className="p-4 bg-primary text-primary-foreground rounded-2xl shadow-blue-500/20 shadow-xl shrink-0">
                 {React.isValidElement(icon)
                   ? React.cloneElement(
                       icon as React.ReactElement<
@@ -55,7 +55,7 @@ const ManagementPageHeader = ({
                     {title}
                   </h1>
                   {description && (
-                    <p className="text-muted-foreground text-sm font-medium max-w-2xl leading-relaxed">
+                    <p className="text-muted-foreground text-sm font-medium max-w-xl leading-relaxed">
                       {description}
                     </p>
                   )}
@@ -66,7 +66,7 @@ const ManagementPageHeader = ({
 
           {/* Actions */}
           {actions?.length > 0 && (
-            <div className="flex gap-2 flex-wrap items-center justify-end ml-auto">
+            <div className="flex flex-wrap items-center gap-2.5 justify-start xl:justify-end">
               {actions.map((action, idx) => {
                 if (React.isValidElement(action)) {
                   return <React.Fragment key={idx}>{action}</React.Fragment>;

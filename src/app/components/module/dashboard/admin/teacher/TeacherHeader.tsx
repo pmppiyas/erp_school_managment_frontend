@@ -2,7 +2,7 @@
 
 import TeacherFormDialog from '@/app/components/module/dashboard/admin/teacher/TeacherFormData';
 import ManagementPageHeader from '@/app/components/module/dashboard/ManagementPageHeader';
-import { Plus } from 'lucide-react';
+import { Plus, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
@@ -25,8 +25,9 @@ const TeacherHeader = () => {
       />
 
       <ManagementPageHeader
+        icon={<UserCheck />}
         title={'Teacher Management'}
-        description="Manage Specialties information and details"
+        description="Manage teachers information and details"
         actions={[
           {
             label: 'Add Teacher',

@@ -4,9 +4,13 @@ import { getAllStudents } from '@/app/services/student/getAllStudents';
 const GenerateBoxWrapper = async ({
   tab,
   classId,
+  term,
+  year,
 }: {
   tab: string;
-  classId: string;
+  classId?: string | null;
+  term?: string;
+  year?: string;
 }) => {
   if (!classId)
     return (
@@ -17,7 +21,9 @@ const GenerateBoxWrapper = async ({
 
   const { students } = await getAllStudents(classId);
 
-  return <GenerateBox tab={tab} students={students} />;
+  return (
+    <GenerateBox tab={tab} students={students} term={term} year={year} />
+  );
 };
 
 export default GenerateBoxWrapper;

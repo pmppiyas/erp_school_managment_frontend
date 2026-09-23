@@ -12,20 +12,28 @@ export const buildPayloadRecords = (
     );
     if (!initial) return;
 
-    if (initial.isInChecked !== current.isInChecked) {
-      records.push({
-        userId: current.userId,
-        status: current.isInChecked ? 'PRESENT' : 'ABSENT',
-        inTime: current.isInChecked ? current.inTime : null,
-      });
+    const inChanged = initial.isInChecked !== current.isInChecked;
+    const outChanged = initial.isOutChecked !== current.isOutChecked;
+
+    if (!inChanged && !outChanged) return;
+
+    const record: any = {
+      userId: current.userId,
+    };
+
+    if (inChanged) {
+      record.status = current.isInChecked ? 'PRESENT' : 'ABSENT';
+      record.inTime = current.isInChecked ? current.inTime : null;
     }
 
-    if (initial.isOutChecked !== current.isOutChecked) {
-      records.push({
-        userId: current.userId,
-        outTime: current.isOutChecked ? current.outTime : null,
-      });
+    if (outChanged) {
+      record.outTime = current.isOutChecked ? current.outTime : null;
+      if (current.isOutChecked) {
+        record.status = 'LEAVE';
+      }
     }
+
+    records.push(record);
   });
   return records;
 };

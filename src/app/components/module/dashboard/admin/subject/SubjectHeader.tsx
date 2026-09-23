@@ -11,8 +11,8 @@ const SubjectHeader = ({
   return (
     <div>
       <ManagementPageHeader
-        icon={<BookOpen className="w-5 h-5 text-primary" />}
-        title="Subject Manegement"
+        icon={<BookOpen />}
+        title="Subject Management"
         description="Manage subjects information and details"
         actions={[classSelector, modeSelector]}
       />

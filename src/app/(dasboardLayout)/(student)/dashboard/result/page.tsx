@@ -32,7 +32,7 @@ const page = async ({
       <ManagementPageHeader
         title={title}
         description="View your semester-wise performance, grades, and GPA."
-        icon={<GraduationCap size={24} className="text-primary" />}
+        icon={<GraduationCap />}
         actions={[<TermSelector key={selectedTerm} />]}
       />
       <Suspense

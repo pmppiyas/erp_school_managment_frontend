@@ -1,12 +1,17 @@
 import ManagementPageHeader from '@/app/components/module/dashboard/ManagementPageHeader';
+import { Printer } from 'lucide-react';
 
 const GenerateHeader = ({
   selectTab,
   classSelector,
+  termSelector,
+  yearSelector,
   tab,
 }: {
   selectTab: React.ReactNode;
   classSelector?: React.ReactNode;
+  termSelector?: React.ReactNode;
+  yearSelector?: React.ReactNode;
   tab: string;
 }) => {
   const getTitle = () => {
@@ -34,9 +39,12 @@ const GenerateHeader = ({
   return (
     <div>
       <ManagementPageHeader
+        icon={<Printer />}
         title={getTitle()}
         description={getDescription()}
-        actions={[selectTab, classSelector]}
+        actions={[selectTab, classSelector, termSelector, yearSelector].filter(
+          Boolean
+        )}
       />
     </div>
   );

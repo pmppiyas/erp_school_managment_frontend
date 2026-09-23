@@ -1,5 +1,6 @@
 import ManagementPageHeader from '@/app/components/module/dashboard/ManagementPageHeader';
 import React from 'react';
+import { Award } from 'lucide-react';
 
 const ResultHeader = ({
   tabSelector,
@@ -17,6 +18,7 @@ const ResultHeader = ({
   return (
     <div>
       <ManagementPageHeader
+        icon={<Award />}
         title={tab === 'view' ? 'View Results' : 'Upload Excel Results'}
         description={
           tab === 'view'

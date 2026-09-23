@@ -1,30 +1,32 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { IStudent } from '@/types/student.interface';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Printer, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import EmptyComp from '@/app/components/shared/EmptyComp';
 import AdmitCard from '@/app/components/shared/template/AdmitCard';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { TERMS } from '@/constant';
 import { Term } from '@/types/fee.interface';
 
-const CURRENT_YEAR = new Date().getFullYear();
-const YEARS = Array.from({ length: 10 }, (_, i) => CURRENT_YEAR - i);
+const AdmitGenerate = ({
+  students,
+  term,
+  year,
+}: {
+  students: IStudent[];
+  term?: string;
+  year?: string;
+}) => {
+  const searchParams = useSearchParams();
+  const currentYear = new Date().getFullYear();
 
-const AdmitGenerate = ({ students }: { students: IStudent[] }) => {
+  const examTerm = (term || searchParams.get('term') || 'FIRST') as Term;
+  const selectedYear = Number(year || searchParams.get('year') || currentYear);
+
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [showCards, setShowCards] = useState(false);
-  const [examTerm, setExamTerm] = useState<Term>('FIRST');
-  const [selectedYear, setSelectedYear] = useState<number>(CURRENT_YEAR);
 
   const toggleAll = () => {
     if (selectedIds.length === students.length) {
@@ -94,7 +96,7 @@ const AdmitGenerate = ({ students }: { students: IStudent[] }) => {
       {students?.length > 0 ? (
         <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
           {/* Action Bar */}
-          <div className="p-4 border-b bg-muted/30 space-y-4">
+          <div className="p-4 border-b bg-muted/30">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4">
                 <div className="flex items-center space-x-2">
@@ -125,51 +127,6 @@ const AdmitGenerate = ({ students }: { students: IStudent[] }) => {
               >
                 প্রবেশপত্র তৈরি করুন
               </Button>
-            </div>
-
-            {/* Term and Year Selection */}
-            <div className="flex flex-wrap gap-4 pt-4 border-t">
-              <div className="flex-1 min-w-[200px]">
-                <label className="text-sm font-medium text-muted-foreground mb-2 block">
-                  পরীক্ষার টার্ম (Exam Term)
-                </label>
-                <Select
-                  value={examTerm}
-                  onValueChange={(v) => setExamTerm(v as Term)}
-                >
-                  <SelectTrigger className="bg-background">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TERMS.map((t) => (
-                      <SelectItem key={t} value={t}>
-                        {t} Term
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex-1 min-w-[200px]">
-                <label className="text-sm font-medium text-muted-foreground mb-2 block">
-                  শিক্ষাবর্ষ (Academic Year)
-                </label>
-                <Select
-                  value={selectedYear.toString()}
-                  onValueChange={(v) => setSelectedYear(Number(v))}
-                >
-                  <SelectTrigger className="bg-background">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {YEARS.map((y) => (
-                      <SelectItem key={y} value={y.toString()}>
-                        {y}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
           </div>
 

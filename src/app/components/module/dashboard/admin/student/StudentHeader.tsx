@@ -1,7 +1,7 @@
 'use client';
 
 import ManagementPageHeader from '../../ManagementPageHeader';
-import { Plus } from 'lucide-react';
+import { Plus, Users } from 'lucide-react';
 import { useState } from 'react';
 import StudentFormDialog from './StudentFormDialog';
 import SearchField from '../../../../shared/SearchField';
@@ -14,6 +14,7 @@ const StudentHeader = ({ classes }: { classes: IClass[] }) => {
   return (
     <>
       <ManagementPageHeader
+        icon={<Users />}
         title="Student Management"
         description="Manage students information and details"
         searchField={<SearchField />}

@@ -38,6 +38,7 @@ const AttendancePage = async ({
   return (
     <div className="space-y-6">
       <ManagementPageHeader
+        icon={<CalendarCheck />}
         title={title}
         description="Monitor and manage daily presence for students and teachers."
         actions={[

@@ -2,7 +2,7 @@
 
 import ManagementPageHeader from '@/app/components/module/dashboard/ManagementPageHeader';
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, School } from 'lucide-react';
 import ClassFormDialog from '@/app/components/module/dashboard/admin/class/ClassFromDialog';
 
 const ClassHeader = () => {
@@ -11,6 +11,7 @@ const ClassHeader = () => {
   return (
     <div>
       <ManagementPageHeader
+        icon={<School />}
         title="Class Management"
         description="Manage classes information and details"
         actions={[

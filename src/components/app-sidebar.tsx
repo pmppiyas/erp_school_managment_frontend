@@ -34,7 +34,7 @@ export default async function AppSidebar() {
         <Logo />
       </SidebarHeader>
 
-      <SidebarContent className="px-2 py-3 space-y-3">
+      <SidebarContent className="px-2 py-3 space-y-3 custom-scrollbar">
         {roleSections.map((section, idx) => (
           <SidebarGroup key={idx} className="p-0">
             {section.title && (

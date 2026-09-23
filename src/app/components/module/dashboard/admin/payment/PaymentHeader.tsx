@@ -1,4 +1,5 @@
 import ManagementPageHeader from '@/app/components/module/dashboard/ManagementPageHeader';
+import { CreditCard } from 'lucide-react';
 
 const PaymentHeader = ({
   selectTab,
@@ -12,6 +13,7 @@ const PaymentHeader = ({
   return (
     <div>
       <ManagementPageHeader
+        icon={<CreditCard />}
         title={tab === 'create' ? 'Make New Payment' : 'Payment Records'}
         description={
           tab === 'create'

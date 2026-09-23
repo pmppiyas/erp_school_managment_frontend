@@ -18,7 +18,7 @@ const page = async ({
       <ManagementPageHeader
         title="Daily Diary"
         description="Manage daily every period's diary and class activities."
-        icon={<BookOpenCheck size={24} className="text-primary" />}
+        icon={<BookOpenCheck />}
         actions={[<DateSelector key="date-picker" withNavigation={true} />]}
       />
 

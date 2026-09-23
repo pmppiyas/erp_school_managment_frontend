@@ -1,27 +1,27 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { IStudent } from '@/types/student.interface';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Printer, ArrowLeft, CheckCircle2, Award } from 'lucide-react';
 import EmptyComp from '@/app/components/shared/EmptyComp';
 import TestimonialCard from '@/app/components/shared/template/TestimonialCard';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
-const CURRENT_YEAR = new Date().getFullYear();
-const YEARS = Array.from({ length: 10 }, (_, i) => CURRENT_YEAR - i);
+const TestimonialGenerate = ({
+  students,
+  year,
+}: {
+  students: IStudent[];
+  year?: string;
+}) => {
+  const searchParams = useSearchParams();
+  const currentYear = new Date().getFullYear();
+  const selectedYear = Number(year || searchParams.get('year') || currentYear);
 
-const TestimonialGenerate = ({ students }: { students: IStudent[] }) => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [showCards, setShowCards] = useState(false);
-  const [selectedYear, setSelectedYear] = useState<number>(CURRENT_YEAR);
 
   const toggleAll = () => {
     if (selectedIds.length === students.length) {
@@ -88,7 +88,7 @@ const TestimonialGenerate = ({ students }: { students: IStudent[] }) => {
       {students?.length > 0 ? (
         <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
           {/* Action Bar */}
-          <div className="p-4 border-b bg-muted/30 space-y-4">
+          <div className="p-4 border-b bg-muted/30">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div className="flex items-center gap-4">
                 <div className="flex items-center space-x-2">
@@ -121,29 +121,6 @@ const TestimonialGenerate = ({ students }: { students: IStudent[] }) => {
                 <Award className="w-4 h-4" />
                 সনদপত্র তৈরি করুন
               </Button>
-            </div>
-
-            <div className="flex gap-4 pt-4 border-t items-end">
-              <div className="flex-1 max-w-[200px]">
-                <label className="text-xs font-bold text-muted-foreground mb-1.5 block uppercase">
-                  শিক্ষাবর্ষ
-                </label>
-                <Select
-                  value={selectedYear.toString()}
-                  onValueChange={(v) => setSelectedYear(Number(v))}
-                >
-                  <SelectTrigger className="bg-background h-9">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {YEARS.map((y) => (
-                      <SelectItem key={y} value={y.toString()}>
-                        {y}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
           </div>
 

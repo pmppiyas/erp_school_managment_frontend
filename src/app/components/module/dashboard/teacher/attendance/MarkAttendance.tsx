@@ -21,29 +21,55 @@ import {
   IUserAttend,
 } from '../../../../../../types/attendance.interface';
 
+const isDateToday = (dateInput: string | Date | undefined | null) => {
+  if (!dateInput) return false;
+  const d = new Date(dateInput);
+  if (isNaN(d.getTime())) return false;
+
+  const now = new Date();
+  const isLocalToday =
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate();
+
+  if (isLocalToday) return true;
+
+  const bdtDate = new Date(d.getTime() + 6 * 60 * 60 * 1000);
+  const bdtNow = new Date(now.getTime() + 6 * 60 * 60 * 1000);
+  return (
+    bdtDate.getUTCFullYear() === bdtNow.getUTCFullYear() &&
+    bdtDate.getUTCMonth() === bdtNow.getUTCMonth() &&
+    bdtDate.getUTCDate() === bdtNow.getUTCDate()
+  );
+};
+
+const findTodayAttendance = (attendances?: any[]) => {
+  if (!Array.isArray(attendances) || attendances.length === 0) return undefined;
+  const todayRecords = attendances.filter(
+    (a: any) => isDateToday(a.createdAt) || isDateToday(a.inTime)
+  );
+  if (!todayRecords.length) return undefined;
+  todayRecords.sort((a: any, b: any) => {
+    const timeA = new Date(a.createdAt || a.inTime).getTime();
+    const timeB = new Date(b.createdAt || b.inTime).getTime();
+    return timeB - timeA;
+  });
+  return todayRecords[0];
+};
+
 const MarkAttendance = ({ data }: { data: IUserAttend[] }) => {
   const [attendance, setAttendance] = useState<IAttendance[]>([]);
   const initialAttendance = useRef<IAttendance[]>([]);
   const [loading, setLoading] = useState(false);
   const [, startTransition] = useTransition();
   const router = useRouter();
-  const getTodayString = () => {
-    const d = new Date();
-    return d.toLocaleDateString('en-CA');
-  };
 
   useEffect(() => {
     if (!data?.length) return;
 
-    const todayStr = getTodayString();
-
     const mapped = data.map((item) => {
       const attendances = item?.user?.attendances ?? [];
-
-      const todayAttendance = attendances.find((a: any) => {
-        const createdAtDate = a.createdAt?.split('T')[0];
-        return createdAtDate === todayStr;
-      });
+      const todayAttendance = findTodayAttendance(attendances);
 
       const status = todayAttendance?.status;
 
@@ -150,11 +176,7 @@ const MarkAttendance = ({ data }: { data: IUserAttend[] }) => {
         <TableBody>
           {data.map((user) => {
             const record = attendance.find((a) => a.userId === user.userId);
-            const todayStr = getTodayString();
-
-            const todayAttendance = user.user?.attendances?.find(
-              (a: any) => a.createdAt?.split('T')[0] === todayStr
-            );
+            const todayAttendance = findTodayAttendance(user.user?.attendances);
             const status = todayAttendance?.status;
 
             return (
