@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/app/components/shared/Header';
 import {
   Accordion,
@@ -34,6 +34,23 @@ interface NoticeItem {
 
 const NoticeBoard = () => {
   const [activeCategory, setActiveCategory] = useState<string>('সকল');
+
+  useEffect(() => {
+    const scrollToNotice = () => {
+      if (typeof window !== 'undefined' && window.location.hash === '#notice-board') {
+        const el = document.getElementById('notice-board');
+        if (el) {
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        }
+      }
+    };
+
+    scrollToNotice();
+    window.addEventListener('hashchange', scrollToNotice);
+    return () => window.removeEventListener('hashchange', scrollToNotice);
+  }, []);
 
   const NoticeData: NoticeItem[] = [
     {
@@ -108,7 +125,10 @@ const NoticeBoard = () => {
   };
 
   return (
-    <section className="w-full pt-8 sm:pt-12 pb-14 sm:pb-16 bg-slate-50/70 dark:bg-[#070D18] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300">
+    <section
+      id="notice-board"
+      className="w-full pt-8 sm:pt-12 pb-14 sm:pb-16 bg-slate-50/70 dark:bg-[#070D18] border-b border-slate-200/80 dark:border-slate-800/80 text-slate-900 dark:text-white relative overflow-hidden transition-colors duration-300 scroll-mt-24 sm:scroll-mt-28"
+    >
       {/* Decorative Ambient Mesh Glows */}
       <div className="absolute top-10 left-10 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />

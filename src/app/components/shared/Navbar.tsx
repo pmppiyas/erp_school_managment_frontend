@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Menu,
   X,
@@ -16,6 +16,7 @@ import {
   UserCheck,
   Sun,
   Moon,
+  Bell,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/hooks/useUser';
@@ -30,35 +31,77 @@ const Navbar = () => {
   const { user } = useUser();
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [currentHash, setCurrentHash] = useState('');
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+  const isClickScrollingRef = useRef(false);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const syncHash = () => {
+      if (typeof window !== 'undefined') {
+        const hash = window.location.hash;
+        setCurrentHash(hash);
+        if (hash === '#notice-board') {
+          isClickScrollingRef.current = true;
+          if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+          clickTimeoutRef.current = setTimeout(() => {
+            isClickScrollingRef.current = false;
+          }, 1500);
+        }
+      }
+    };
 
-  // Detect when scroll passes hero section
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+    window.addEventListener('popstate', syncHash);
+    return () => {
+      window.removeEventListener('hashchange', syncHash);
+      window.removeEventListener('popstate', syncHash);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
+  }, [pathname]);
+
   useEffect(() => {
     const handleScroll = () => {
       const heroElement = document.getElementById('hero-section');
       if (heroElement) {
         const heroBottom = heroElement.getBoundingClientRect().bottom;
-        // Changes color as soon as hero scroll finishes (passes header ~80px)
         setIsPastHero(heroBottom <= 80);
       } else {
         setIsPastHero(window.scrollY > 80);
       }
+
+      if (pathname !== '/' || isClickScrollingRef.current) {
+        return;
+      }
+
+      const noticeElement = document.getElementById('notice-board');
+      if (noticeElement) {
+        const rect = noticeElement.getBoundingClientRect();
+        if (rect.top <= 250 && rect.bottom >= 150) {
+          setCurrentHash('#notice-board');
+        } else if (window.scrollY < 120) {
+          setCurrentHash('');
+        }
+      } else if (window.scrollY < 120) {
+        setCurrentHash('');
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    const heroElement = document.getElementById('hero-section');
+    if (heroElement) {
+      setIsPastHero(heroElement.getBoundingClientRect().bottom <= 80);
+    }
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  // Auto-close on route / pathname change
   useEffect(() => {
     setOpenNavbar(false);
+    setPendingHref(null);
   }, [pathname]);
 
-  // Close on desktop resize & Escape key
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -80,10 +123,70 @@ const Navbar = () => {
     };
   }, []);
 
+  const handleNavLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    setPendingHref(href);
+
+    if (href === '/#notice-board') {
+      if (pathname === '/') {
+        e.preventDefault();
+        setCurrentHash('#notice-board');
+        window.history.pushState(null, '', '/#notice-board');
+        isClickScrollingRef.current = true;
+        if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+        clickTimeoutRef.current = setTimeout(() => {
+          isClickScrollingRef.current = false;
+          setPendingHref(null);
+        }, 1200);
+        const noticeEl = document.getElementById('notice-board');
+        if (noticeEl) {
+          noticeEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        setCurrentHash('#notice-board');
+      }
+    } else if (href === '/') {
+      if (pathname === '/') {
+        if (window.location.hash) {
+          window.history.pushState(null, '', '/');
+        }
+        setCurrentHash('');
+        isClickScrollingRef.current = true;
+        if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+        clickTimeoutRef.current = setTimeout(() => {
+          isClickScrollingRef.current = false;
+          setPendingHref(null);
+        }, 1200);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        setCurrentHash('');
+      }
+    }
+
+    setOpenNavbar(false);
+  };
+
+  const isLinkActive = (href: string) => {
+    if (pendingHref !== null) {
+      return href === pendingHref;
+    }
+    if (href === '/#notice-board') {
+      return pathname === '/' && currentHash === '#notice-board';
+    }
+    if (href === '/') {
+      return pathname === '/' && currentHash !== '#notice-board';
+    }
+    return pathname === href;
+  };
+
   const navLinks = [
     { name: 'Home', href: '/', icon: Home },
-    { name: 'About', href: '/about', icon: Info },
+    { name: 'Notice Board', href: '/#notice-board', icon: Bell },
+    { name: 'Admission', href: '/admissions', icon: GraduationCap },
     { name: 'Gallery', href: '/gallery', icon: ImageIcon },
+    { name: 'About', href: '/about', icon: Info },
     { name: 'Contact', href: '/contact', icon: PhoneCall },
   ];
 
@@ -117,7 +220,7 @@ const Navbar = () => {
           {/* Logo Section */}
           <Link
             href="/"
-            onClick={() => setOpenNavbar(false)}
+            onClick={(e) => handleNavLinkClick(e, '/')}
             className="group flex items-center gap-2.5 transition-transform duration-200 hover:opacity-95"
           >
             <div className="relative flex h-9.5 w-9.5 items-center justify-center rounded-xl bg-linear-to-tr from-blue-600 via-indigo-600 to-sky-500 text-white shadow-md shadow-blue-500/25 ring-2 ring-white/20 group-hover:scale-105 transition-all">
@@ -148,17 +251,18 @@ const Navbar = () => {
             }`}
           >
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = isLinkActive(link.href);
               return (
                 <Link
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => handleNavLinkClick(e, link.href)}
                   className={`relative px-4 py-1.5 text-xs lg:text-sm font-semibold rounded-full transition-all duration-200 ${
                     isActive
                       ? 'bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-sm shadow-blue-500/30 font-bold'
                       : isPastHero
-                      ? 'text-slate-300 hover:text-white hover:bg-slate-800/90'
-                      : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-300 hover:bg-white/90 dark:hover:bg-slate-700/60'
+                        ? 'text-slate-300 hover:text-white hover:bg-slate-800/90'
+                        : 'text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-300 hover:bg-white/90 dark:hover:bg-slate-700/60'
                   }`}
                 >
                   {link.name}
@@ -301,25 +405,29 @@ const Navbar = () => {
             }`}
           >
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = isLinkActive(link.href);
               const IconComponent = link.icon;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  onClick={() => setOpenNavbar(false)}
+                  onClick={(e) => handleNavLinkClick(e, link.href)}
                   className={`flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all ${
                     isActive
                       ? 'bg-blue-600/15 text-blue-600 dark:text-sky-300 font-bold'
                       : isPastHero
-                      ? 'text-slate-300 hover:bg-slate-900 hover:text-white'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
+                        ? 'text-slate-300 hover:bg-slate-900 hover:text-white'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <IconComponent
                       size={18}
-                      className={isActive ? 'text-blue-600 dark:text-sky-400' : 'text-slate-400 dark:text-slate-500'}
+                      className={
+                        isActive
+                          ? 'text-blue-600 dark:text-sky-400'
+                          : 'text-slate-400 dark:text-slate-500'
+                      }
                     />
                     <span>{link.name}</span>
                   </div>
@@ -330,7 +438,9 @@ const Navbar = () => {
               );
             })}
 
-            <div className={`h-px my-2 ${isPastHero ? 'bg-slate-800' : 'bg-slate-100 dark:bg-slate-800'}`} />
+            <div
+              className={`h-px my-2 ${isPastHero ? 'bg-slate-800' : 'bg-slate-100 dark:bg-slate-800'}`}
+            />
 
             {/* Mobile Bottom Action */}
             <div className="pt-1">

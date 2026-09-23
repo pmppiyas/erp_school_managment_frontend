@@ -1,7 +1,6 @@
 'use server';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-'use server';
 import { serverFetch } from '@/lib/serverFetch';
 import { revalidateTag } from 'next/cache';
 
@@ -12,7 +11,7 @@ export const postSchedule = async (classId: string, payload: any) => {
     const result = await res.json();
 
     if (res.ok) {
-      revalidateTag('schedule', '/');
+      revalidateTag('schedule', 'default');
     }
 
     return result;

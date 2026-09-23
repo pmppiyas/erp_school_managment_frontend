@@ -255,7 +255,6 @@ const CreatePayment = ({
       const results = await Promise.all(promises);
       if (results.every((res) => res.success)) {
         setSuccessData(currentSlipData);
-        toast.success('Payment recorded successfully');
         setShowSuccessModal(true);
         router.refresh();
       } else {
